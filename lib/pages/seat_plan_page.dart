@@ -37,6 +37,7 @@ class _SeatPlanPageState extends State<SeatPlanPage> {
   _getData() async {
     final resList = await Provider.of<AppDataProvider>(context, listen: false)
         .getReservationsByScheduleAndDepartureDate(schedule.scheduleId!, departureDate);
+    print(resList);
     setState(() {
       isDataLoading = false;
     });

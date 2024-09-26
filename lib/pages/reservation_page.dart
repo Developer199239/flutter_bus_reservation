@@ -48,13 +48,14 @@ class _ReservationPageState extends State<ReservationPage> {
             ExpansionPanelList(
               expansionCallback: (index, isExpanded) {
                 setState(() {
-                  items[index].isExpanded = !isExpanded;
+                  items[index].isExpanded = !items[index].isExpanded;
+                  print("Item at index $index is now ${items[index].isExpanded}");
                 });
               },
               children: items.map((item) => ExpansionPanel(
-                isExpanded: item.isExpanded,
-                headerBuilder: (context, isExpanded) => ReservationItemHeaderView(header: item.header),
-                body: ReservationItemBodyView(body: item.body,)
+                  isExpanded: item.isExpanded,
+                  headerBuilder: (context, isExpanded) => ReservationItemHeaderView(header: item.header),
+                  body: ReservationItemBodyView(body: item.body,)
               )).toList(),
             ),
           ],

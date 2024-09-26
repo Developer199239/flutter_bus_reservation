@@ -18,15 +18,15 @@ class _SearchBoxState extends State<SearchBox> {
         keyboardType: TextInputType.phone,
         controller: _searchController,
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: 'Search with Mobile',
-          suffix: IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              if(_searchController.text.isEmpty) return;
-              widget.onSubmit(_searchController.text);
-            },
-          )
+            border: const OutlineInputBorder(),
+            labelText: 'Search with Mobile',
+            suffix: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                if(_searchController.text.isEmpty) return;
+                widget.onSubmit(_searchController.text);
+              },
+            )
         ),
       ),
     );

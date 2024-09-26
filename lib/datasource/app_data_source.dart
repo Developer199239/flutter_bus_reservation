@@ -64,6 +64,8 @@ class AppDataSource extends DataSource {
   @override
   Future<ResponseModel> addReservation(BusReservation reservation) async {
     final url = '$baseUrl${'reservation/add'}';
+    print(url);
+    print(json.encode(reservation.toJson()));
     try {
       final response = await http.post(Uri.parse(url), headers: header, body: json.encode(reservation.toJson()));
       return await _getResponseModel(response);
@@ -173,7 +175,8 @@ class AppDataSource extends DataSource {
   @override
   Future<List<BusReservation>> getReservationsByScheduleAndDepartureDate(
       int scheduleId, String departureDate) async {
-    final url = '$baseUrl${'reservation/query?scheduleId=$scheduleId&departuredate=$departureDate'}';
+    final url = '$baseUrl${'reservation/query?scheduleId=$scheduleId&departureDate=$departureDate'}';
+    print(url);
     try {
       final response = await http.get(Uri.parse(url));
       if(response.statusCode == 200) {
