@@ -15,7 +15,7 @@ import '../utils/helper_functions.dart';
 import 'data_source.dart';
 
 class AppDataSource extends DataSource {
-  final String baseUrl = 'http://192.168.0.102:8080/api/';
+  final String baseUrl = 'http://192.168.0.111:8080/api/';
 
   Map<String, String> get header =>
       {
@@ -24,7 +24,7 @@ class AppDataSource extends DataSource {
   Future<Map<String, String>> get authHeader async =>
       {
         'Content-Type': 'application/json',
-        HttpHeaders.authorizationHeader: 'Bearer ${await getToken()}',
+        HttpHeaders.authorizationHeader: await getToken(),
       };
 
   @override

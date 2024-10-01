@@ -41,6 +41,8 @@ dependencies:
   shared_preferences:
   freezed_annotation:
   json_annotation:
+  flutter_easyloading:
+  go_router:
 
 dev_dependencies:
   flutter_test:

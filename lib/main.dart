@@ -1,3 +1,4 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:bus_reservation/pages/add_bus_page.dart';
 import 'package:bus_reservation/pages/add_route_page.dart';
 import 'package:bus_reservation/pages/add_schedule_page.dart';
@@ -9,6 +10,7 @@ import 'package:bus_reservation/pages/search_result_page.dart';
 import 'package:bus_reservation/pages/seat_plan_page.dart';
 import 'package:bus_reservation/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/app_data_provider.dart';
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      builder: EasyLoading.init(),
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.dark,

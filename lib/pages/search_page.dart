@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../drawers/main_drawer.dart';
@@ -141,9 +142,11 @@ class _SearchPageState extends State<SearchPage> {
       return;
     }
     if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Searching...');
       Provider.of<AppDataProvider>(context, listen: false)
           .getRouteByCityFromAndCityTo(fromCity!, toCity!)
           .then((route) {
+        EasyLoading.dismiss();
         if (route != null) {
           print('route found');
           Navigator.pushNamed(context, routeNameSearchResultPage,

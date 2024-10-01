@@ -8,7 +8,7 @@ class AppUser {
     this.id,
     required this.userName,
     required this.password,
-    this.role = 'Admin',
+    this.role = '',
   });
 
   Map<String, dynamic> toJson() {

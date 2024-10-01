@@ -9,6 +9,7 @@ const String reservationExpired = 'Expired';
 const String emptyFieldErrMessage = 'This field must not be empty';
 const String emptyDateErrMessage = 'Please select a departure date';
 const String accessToken = 'accessToken';
+const String userRole = 'userRole';
 const String loginTime = 'loginTime';
 const String expirationDuration = 'expirationDuration';
 const String routeNameHome = 'search';
