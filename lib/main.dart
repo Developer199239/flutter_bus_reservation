@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'pages/add_city.dart';
 import 'providers/app_data_provider.dart';
 
 void main() {
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         routeNameAddSchedulePage : (context) => const AddSchedulePage(),
         routeNameReservationPage : (context) => const ReservationPage(),
         routeNameLoginPage : (context) => const LoginPage(),
-
+        routeNameAddCityPage : (context) => const AddCity(),
       },
     );
   }

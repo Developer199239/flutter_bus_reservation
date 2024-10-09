@@ -12,7 +12,7 @@ part of 'customer.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Customer _$CustomerFromJson(Map<String, dynamic> json) {
   return _Customer.fromJson(json);
@@ -29,8 +29,12 @@ mixin _$Customer {
   String get email => throw _privateConstructorUsedError;
   set email(String value) => throw _privateConstructorUsedError;
 
+  /// Serializes this Customer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Customer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomerCopyWith<Customer> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -54,6 +58,8 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Customer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -84,10 +90,11 @@ class _$CustomerCopyWithImpl<$Res, $Val extends Customer>
 }
 
 /// @nodoc
-abstract class _$$_CustomerCopyWith<$Res> implements $CustomerCopyWith<$Res> {
-  factory _$$_CustomerCopyWith(
-          _$_Customer value, $Res Function(_$_Customer) then) =
-      __$$_CustomerCopyWithImpl<$Res>;
+abstract class _$$CustomerImplCopyWith<$Res>
+    implements $CustomerCopyWith<$Res> {
+  factory _$$CustomerImplCopyWith(
+          _$CustomerImpl value, $Res Function(_$CustomerImpl) then) =
+      __$$CustomerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -95,13 +102,15 @@ abstract class _$$_CustomerCopyWith<$Res> implements $CustomerCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CustomerCopyWithImpl<$Res>
-    extends _$CustomerCopyWithImpl<$Res, _$_Customer>
-    implements _$$_CustomerCopyWith<$Res> {
-  __$$_CustomerCopyWithImpl(
-      _$_Customer _value, $Res Function(_$_Customer) _then)
+class __$$CustomerImplCopyWithImpl<$Res>
+    extends _$CustomerCopyWithImpl<$Res, _$CustomerImpl>
+    implements _$$CustomerImplCopyWith<$Res> {
+  __$$CustomerImplCopyWithImpl(
+      _$CustomerImpl _value, $Res Function(_$CustomerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Customer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -110,7 +119,7 @@ class __$$_CustomerCopyWithImpl<$Res>
     Object? mobile = null,
     Object? email = null,
   }) {
-    return _then(_$_Customer(
+    return _then(_$CustomerImpl(
       customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
@@ -133,15 +142,15 @@ class __$$_CustomerCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Customer implements _Customer {
-  _$_Customer(
+class _$CustomerImpl implements _Customer {
+  _$CustomerImpl(
       {this.customerId,
       required this.customerName,
       required this.mobile,
       required this.email});
 
-  factory _$_Customer.fromJson(Map<String, dynamic> json) =>
-      _$$_CustomerFromJson(json);
+  factory _$CustomerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomerImplFromJson(json);
 
   @override
   int? customerId;
@@ -157,15 +166,17 @@ class _$_Customer implements _Customer {
     return 'Customer(customerId: $customerId, customerName: $customerName, mobile: $mobile, email: $email)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Customer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CustomerCopyWith<_$_Customer> get copyWith =>
-      __$$_CustomerCopyWithImpl<_$_Customer>(this, _$identity);
+  _$$CustomerImplCopyWith<_$CustomerImpl> get copyWith =>
+      __$$CustomerImplCopyWithImpl<_$CustomerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CustomerToJson(
+    return _$$CustomerImplToJson(
       this,
     );
   }
@@ -176,9 +187,10 @@ abstract class _Customer implements Customer {
       {int? customerId,
       required String customerName,
       required String mobile,
-      required String email}) = _$_Customer;
+      required String email}) = _$CustomerImpl;
 
-  factory _Customer.fromJson(Map<String, dynamic> json) = _$_Customer.fromJson;
+  factory _Customer.fromJson(Map<String, dynamic> json) =
+      _$CustomerImpl.fromJson;
 
   @override
   int? get customerId;
@@ -192,8 +204,11 @@ abstract class _Customer implements Customer {
   @override
   String get email;
   set email(String value);
+
+  /// Create a copy of Customer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_CustomerCopyWith<_$_Customer> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CustomerImplCopyWith<_$CustomerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

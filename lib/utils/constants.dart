@@ -22,6 +22,8 @@ const String routeNameAddRoutePage = 'add_route';
 const String routeNameAddSchedulePage = 'add_schedule';
 const String routeNameScheduleListPage = 'schedule_list';
 const String routeNameReservationPage = 'reservation';
+const String routeNameAddCityPage = 'add_city';
+const String unknownErrMessage = 'Unknown error!';
 
 
 const cities = [

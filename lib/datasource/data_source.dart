@@ -1,3 +1,5 @@
+import 'package:bus_reservation/models/city_model.dart';
+
 import '../models/app_user.dart';
 import '../models/auth_response_model.dart';
 import '../models/bus_model.dart';
@@ -22,4 +24,9 @@ abstract class DataSource {
   Future<List<BusReservation>> getAllReservation();
   Future<List<BusReservation>> getReservationsByMobile(String mobile);
   Future<List<BusReservation>> getReservationsByScheduleAndDepartureDate(int scheduleId, String departureDate);
+
+//   city
+  Future<List<City>> getAllCity();
+  Future<ResponseModel> addCity(City city);
+  Future<ResponseModel> deleteCity(int cityId);
 }

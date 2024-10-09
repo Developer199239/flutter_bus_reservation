@@ -12,7 +12,7 @@ part of 'response_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ResponseModel _$ResponseModelFromJson(Map<String, dynamic> json) {
   return _ResponseModel.fromJson(json);
@@ -30,8 +30,12 @@ mixin _$ResponseModel {
   Map<String, dynamic> get object => throw _privateConstructorUsedError;
   set object(Map<String, dynamic> value) => throw _privateConstructorUsedError;
 
+  /// Serializes this ResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ResponseModelCopyWith<ResponseModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -59,6 +63,8 @@ class _$ResponseModelCopyWithImpl<$Res, $Val extends ResponseModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ResponseModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -89,11 +95,11 @@ class _$ResponseModelCopyWithImpl<$Res, $Val extends ResponseModel>
 }
 
 /// @nodoc
-abstract class _$$_ResponseModelCopyWith<$Res>
+abstract class _$$ResponseModelImplCopyWith<$Res>
     implements $ResponseModelCopyWith<$Res> {
-  factory _$$_ResponseModelCopyWith(
-          _$_ResponseModel value, $Res Function(_$_ResponseModel) then) =
-      __$$_ResponseModelCopyWithImpl<$Res>;
+  factory _$$ResponseModelImplCopyWith(
+          _$ResponseModelImpl value, $Res Function(_$ResponseModelImpl) then) =
+      __$$ResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -104,13 +110,15 @@ abstract class _$$_ResponseModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ResponseModelCopyWithImpl<$Res>
-    extends _$ResponseModelCopyWithImpl<$Res, _$_ResponseModel>
-    implements _$$_ResponseModelCopyWith<$Res> {
-  __$$_ResponseModelCopyWithImpl(
-      _$_ResponseModel _value, $Res Function(_$_ResponseModel) _then)
+class __$$ResponseModelImplCopyWithImpl<$Res>
+    extends _$ResponseModelCopyWithImpl<$Res, _$ResponseModelImpl>
+    implements _$$ResponseModelImplCopyWith<$Res> {
+  __$$ResponseModelImplCopyWithImpl(
+      _$ResponseModelImpl _value, $Res Function(_$ResponseModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ResponseModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,7 +127,7 @@ class __$$_ResponseModelCopyWithImpl<$Res>
     Object? message = null,
     Object? object = null,
   }) {
-    return _then(_$_ResponseModel(
+    return _then(_$ResponseModelImpl(
       responseStatus: null == responseStatus
           ? _value.responseStatus
           : responseStatus // ignore: cast_nullable_to_non_nullable
@@ -142,15 +150,15 @@ class __$$_ResponseModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ResponseModel implements _ResponseModel {
-  _$_ResponseModel(
+class _$ResponseModelImpl implements _ResponseModel {
+  _$ResponseModelImpl(
       {this.responseStatus = ResponseStatus.SAVED,
       this.statusCode = 200,
       this.message = 'Saved',
       this.object = const {}});
 
-  factory _$_ResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$$_ResponseModelFromJson(json);
+  factory _$ResponseModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ResponseModelImplFromJson(json);
 
   @override
   @JsonKey()
@@ -170,15 +178,17 @@ class _$_ResponseModel implements _ResponseModel {
     return 'ResponseModel(responseStatus: $responseStatus, statusCode: $statusCode, message: $message, object: $object)';
   }
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ResponseModelCopyWith<_$_ResponseModel> get copyWith =>
-      __$$_ResponseModelCopyWithImpl<_$_ResponseModel>(this, _$identity);
+  _$$ResponseModelImplCopyWith<_$ResponseModelImpl> get copyWith =>
+      __$$ResponseModelImplCopyWithImpl<_$ResponseModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResponseModelToJson(
+    return _$$ResponseModelImplToJson(
       this,
     );
   }
@@ -189,10 +199,10 @@ abstract class _ResponseModel implements ResponseModel {
       {ResponseStatus responseStatus,
       int statusCode,
       String message,
-      Map<String, dynamic> object}) = _$_ResponseModel;
+      Map<String, dynamic> object}) = _$ResponseModelImpl;
 
   factory _ResponseModel.fromJson(Map<String, dynamic> json) =
-      _$_ResponseModel.fromJson;
+      _$ResponseModelImpl.fromJson;
 
   @override
   ResponseStatus get responseStatus;
@@ -206,8 +216,11 @@ abstract class _ResponseModel implements ResponseModel {
   @override
   Map<String, dynamic> get object;
   set object(Map<String, dynamic> value);
+
+  /// Create a copy of ResponseModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_ResponseModelCopyWith<_$_ResponseModel> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ResponseModelImplCopyWith<_$ResponseModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -33,7 +33,8 @@ class _MainDrawerState extends State<MainDrawer> {
       userRole = role;
     });
 
-    print('====isLoggedIn $isLoggedIn');
+    print('====isLoggedIn:$isLoggedIn');
+    print('====userRole:$userRole');
   }
 
   @override
@@ -63,6 +64,14 @@ class _MainDrawerState extends State<MainDrawer> {
       // If logged in as admin, show admin-specific menus
       return [
         const HeaderView(),
+        ListTile(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, routeNameAddCityPage);
+          },
+          leading: const Icon(Icons.location_city),
+          title: const Text('Add City'),
+        ),
         ListTile(
           onTap: () {
             Navigator.pop(context);
@@ -125,12 +134,24 @@ class _MainDrawerState extends State<MainDrawer> {
           title: const Text('Logout'),
         ),
       ];
+    } else {
+      return [
+        const HeaderView(),
+        ListTile(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, routeNameLoginPage);
+          },
+          leading: const Icon(Icons.login_outlined),
+          title: const Text('Login'),
+        ),
+      ];
     }
 
     return []; // Default: No menus if neither logged in nor role identified
   }
 
-  void _logout(BuildContext context) async{
+  void _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }

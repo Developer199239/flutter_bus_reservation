@@ -1,6 +1,7 @@
 import 'package:bus_reservation/datasource/app_data_source.dart';
 import 'package:bus_reservation/models/app_user.dart';
 import 'package:bus_reservation/models/auth_response_model.dart';
+import 'package:bus_reservation/models/city_model.dart';
 import 'package:flutter/material.dart';
 
 import '../datasource/data_source.dart';
@@ -107,5 +108,23 @@ class AppDataProvider extends ChangeNotifier {
         ),
       );
     });
+  }
+
+  Future<List<City>> getAllCity() async {
+    return await _dataSource.getAllCity();
+  }
+
+  Future<ResponseModel> addCity(City city) async {
+    return await _dataSource.addCity(city);
+  }
+
+  Future<void> updateCity(City oldCity, City newCity) async {
+    // Your API call to update a city
+    await Future.delayed(const Duration(seconds: 2)); // Simulating delay
+    // Notify listeners or update internal state if needed
+  }
+
+  Future<ResponseModel> deleteCity(int cityId) async {
+    return await _dataSource.deleteCity(cityId);
   }
 }
