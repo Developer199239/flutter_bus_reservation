@@ -118,13 +118,11 @@ class AppDataProvider extends ChangeNotifier {
     return await _dataSource.addCity(city);
   }
 
-  Future<void> updateCity(City oldCity, City newCity) async {
-    // Your API call to update a city
-    await Future.delayed(const Duration(seconds: 2)); // Simulating delay
-    // Notify listeners or update internal state if needed
-  }
-
   Future<ResponseModel> deleteCity(int cityId) async {
     return await _dataSource.deleteCity(cityId);
+  }
+
+  Future<ResponseModel> updateCity(City city) async {
+    return await _dataSource.updateCity(city);
   }
 }

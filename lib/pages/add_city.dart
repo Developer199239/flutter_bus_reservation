@@ -43,7 +43,7 @@ class _AddCityState extends State<AddCity> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _addCity(context);
+          _showCityDialog(isAddCity: true);
         },
         child: const Icon(Icons.add),
       ),
@@ -73,7 +73,7 @@ class _AddCityState extends State<AddCity> {
     );
   }
 
-  Future<void> _addCity(BuildContext context) async {
+  Future<void> _addOrUpdateCity(City city, bool isAddCity) async {
     setState(() => _isLoading = true);
     if (await hasTokenExpired()) {
       setState(() => _isLoading = false);
@@ -88,60 +88,66 @@ class _AddCityState extends State<AddCity> {
     }
 
     try {
-      final response =
-          await Provider.of<AppDataProvider>(context, listen: false)
-              .addCity(City(cityName: 'New City'));
+      final response = isAddCity
+          ? await Provider.of<AppDataProvider>(context, listen: false)
+          .addCity(city)
+          : await Provider.of<AppDataProvider>(context, listen: false)
+          .updateCity(city);
 
       if (response.responseStatus == ResponseStatus.SAVED) {
-        _loadCities(); // Refresh list on successful addition
-      } else if (response.responseStatus == ResponseStatus.EXPIRED ||
-          response.responseStatus == ResponseStatus.UNAUTHORIZED) {
-        showLoginAlertDialog(
-          context: context,
-          message: response.message,
-          callback: () {
-            Navigator.pushNamed(context, routeNameLoginPage);
-          },
-        );
+        _loadCities(); // Refresh list on successful add/update
       } else {
         showMsg(context, response.message);
       }
     } catch (e) {
-      showMsg(context, 'Error adding city: $e');
+      showMsg(context, 'Error ${isAddCity ? 'adding' : 'updating'} city: $e');
     } finally {
       setState(() => _isLoading = false);
     }
   }
 
-  Future<void> _deleteCity(BuildContext context, City city) async {
-    setState(() => _isLoading = true);
-    if (await hasTokenExpired()) {
-      setState(() => _isLoading = false);
-      showLoginAlertDialog(
-        context: context,
-        message: 'Access denied. Please login as Admin',
-        callback: () {
-          Navigator.pushNamed(context, routeNameLoginPage);
-        },
-      );
-      return;
-    }
+  void _showCityDialog({required bool isAddCity, City? city}) {
+    final TextEditingController _controller = TextEditingController(
+      text: isAddCity ? '' : city?.cityName,
+    );
 
-    try {
-      final response =
-          await Provider.of<AppDataProvider>(context, listen: false)
-              .deleteCity(city.cityId!);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isAddCity ? 'Add City' : 'Update City'),
+          content: TextField(
+            controller: _controller,
+            decoration: const InputDecoration(hintText: 'Enter city name'),
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () {
+                final newCityName = _controller.text.trim();
+                if (newCityName.isEmpty) {
+                  showMsg(context, 'City name cannot be empty');
+                  return;
+                }
 
-      if (response.responseStatus == ResponseStatus.SAVED) {
-        _loadCities(); // Reload list after successful deletion
-      } else {
-        showMsg(context, response.message);
-      }
-    } catch (e) {
-      print('Error deleting city: $e');
-    } finally {
-      setState(() => _isLoading = false);
-    }
+                final newCity = City(cityName: newCityName);
+                if(!isAddCity) {
+                  newCity.cityId = city?.cityId!!;
+                }
+                Navigator.of(context).pop();
+                _addOrUpdateCity(newCity, isAddCity);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _showBottomSheet(City city) {
@@ -157,7 +163,7 @@ class _AddCityState extends State<AddCity> {
                 title: const Text('Update'),
                 onTap: () {
                   Navigator.pop(context);
-                  _showUpdateDialog(city);
+                  _showCityDialog(isAddCity: false, city: city);
                 },
               ),
               ListTile(
@@ -175,42 +181,33 @@ class _AddCityState extends State<AddCity> {
     );
   }
 
-  void _showUpdateDialog(City oldCity) {
-    TextEditingController _controller =
-        TextEditingController(text: oldCity.cityName);
+  Future<void> _deleteCity(BuildContext context, City city) async {
+    setState(() => _isLoading = true);
+    if (await hasTokenExpired()) {
+      setState(() => _isLoading = false);
+      showLoginAlertDialog(
+        context: context,
+        message: 'Access denied. Please login as Admin',
+        callback: () {
+          Navigator.pushNamed(context, routeNameLoginPage);
+        },
+      );
+      return;
+    }
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Update City'),
-          content: TextField(
-            controller: _controller,
-            decoration: const InputDecoration(hintText: 'Enter new city name'),
-          ),
-          actions: [
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () async {
-                String newCityName = _controller.text.trim();
-                if (newCityName.isNotEmpty) {
-                  City newCity = City(cityName: newCityName);
-                  Navigator.of(context).pop();
-                  await Provider.of<AppDataProvider>(context, listen: false)
-                      .updateCity(oldCity, newCity);
-                  setState(() {}); // Rebuild UI to reflect changes
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
+    try {
+      final response = await Provider.of<AppDataProvider>(context, listen: false)
+          .deleteCity(city.cityId!);
+
+      if (response.responseStatus == ResponseStatus.SAVED) {
+        _loadCities(); // Reload list after successful deletion
+      } else {
+        showMsg(context, response.message);
+      }
+    } catch (e) {
+      print('Error deleting city: $e');
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 }

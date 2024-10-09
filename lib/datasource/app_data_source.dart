@@ -309,4 +309,16 @@ class AppDataSource extends DataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<ResponseModel> updateCity(City city) async {
+    final url = '$baseUrl${'city/update/${city.cityId}'}';
+    try {
+      final response = await http.put(Uri.parse(url),
+          headers: await authHeader, body: json.encode(city.toJson()));
+      return await _getResponseModel(response);
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

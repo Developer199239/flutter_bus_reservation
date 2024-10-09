@@ -29,4 +29,5 @@ abstract class DataSource {
   Future<List<City>> getAllCity();
   Future<ResponseModel> addCity(City city);
   Future<ResponseModel> deleteCity(int cityId);
+  Future<ResponseModel> updateCity(City city);
 }
