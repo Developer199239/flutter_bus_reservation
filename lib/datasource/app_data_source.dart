@@ -184,9 +184,19 @@ class AppDataSource extends DataSource {
   }
 
   @override
-  Future<List<BusSchedule>> getAllSchedules() {
-    // TODO: implement getAllSchedules
-    throw UnimplementedError();
+  Future<List<BusSchedule>> getAllSchedules() async{
+    final url = '$baseUrl${'schedule/all'}';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final List<dynamic> mapList = json.decode(response.body) as List;
+        return mapList.map((json) => BusSchedule.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load BusSchedules');
+      }
+    } catch (error) {
+      rethrow;
+    }
   }
 
   @override
