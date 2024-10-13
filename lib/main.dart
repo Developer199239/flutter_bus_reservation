@@ -1,7 +1,8 @@
+import 'package:bus_reservation/pages/add_schedule_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:bus_reservation/pages/add_bus_page.dart';
 import 'package:bus_reservation/pages/add_route_page.dart';
-import 'package:bus_reservation/pages/add_schedule_page.dart';
+import 'package:bus_reservation/pages/schedule_list_page.dart';
 import 'package:bus_reservation/pages/booking_confirmation_page.dart';
 import 'package:bus_reservation/pages/login_page.dart';
 import 'package:bus_reservation/pages/reservation_page.dart';
@@ -35,8 +36,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.dark,
       ),
-      // initialRoute: routeNameHome,
-      initialRoute: routeNameAddSchedulePage,
+      initialRoute: routeNameHome,
+      // initialRoute: routeNameAddSchedulePage,
       routes: {
         routeNameHome : (context) => const SearchPage(),
         routeNameSearchResultPage : (context) => const SearchResultPage(),
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         routeNameBookingConfirmationPage : (context) => const BookingConfirmationPage(),
         routeNameAddBusPage : (context) => const AddBusPage(),
         routeNameAddRoutePage : (context) => const AddRoutePage(),
+        routeNameScheduleListPage : (context) => const ScheduleListPage(),
         routeNameAddSchedulePage : (context) => const AddSchedulePage(),
         routeNameReservationPage : (context) => const ReservationPage(),
         routeNameLoginPage : (context) => const LoginPage(),

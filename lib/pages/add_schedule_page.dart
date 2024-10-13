@@ -1,115 +1,236 @@
-import 'package:bus_reservation/models/bus_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../customwidgets/login_alert_dialog.dart';
 import '../models/bus_model.dart';
 import '../models/bus_schedule.dart';
-import '../models/city_model.dart';
+import '../models/bus_route.dart';
 import '../providers/app_data_provider.dart';
 import '../utils/constants.dart';
 import '../utils/helper_functions.dart';
 
 class AddSchedulePage extends StatefulWidget {
-  const AddSchedulePage({super.key});
+  const AddSchedulePage({Key? key}) : super(key: key);
 
   @override
   State<AddSchedulePage> createState() => _AddSchedulePageState();
 }
 
 class _AddSchedulePageState extends State<AddSchedulePage> {
-  bool _isLoading = false;
-  List<BusSchedule> _scheduleList = [];
+  final _formKey = GlobalKey<FormState>();
+  String? busType;
+  BusRoute? busRoute;
+  Bus? bus;
+  TimeOfDay? timeOfDay;
+  final priceController = TextEditingController();
+  final discountController = TextEditingController();
+  final feeController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    _loadSchedules();
+  void didChangeDependencies() {
+    _getData();
+    super.didChangeDependencies();
   }
 
-  Future<void> _loadSchedules() async {
-    final appDataProvider =
-    Provider.of<AppDataProvider>(context, listen: false);
-    setState(() => _isLoading = true);
-    try {
-      final schedules = await appDataProvider.allSchedule();
-      setState(() {
-        _scheduleList = schedules;
-        _isLoading = false;
-      });
-    } catch (e) {
-      print('Error loading _scheduleList: $e');
-      setState(() => _isLoading = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Schedule'),
+        title: const Text('Add Schedule'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _showRouteDialog(isAddRoute: true);
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: Stack(
-        children: [
-          if (_isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
-            )
-          else if (_scheduleList.isEmpty)
-            const Center(
-              child: Text('No schedule available.'),
-            )
-          else
-            ListView.builder(
-              itemCount: _scheduleList.length,
-              itemBuilder: (context, index) {
-                final schedule = _scheduleList[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 8.0),
-                  child: Card(
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(16.0),
-                      title: Text(
-                        schedule.bus.busName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Route: ${schedule.busRoute.routeName}'),
-                          Text('Price: ${schedule.ticketPrice}'),
-                          Text('Discount: ${schedule.discount}'),
-                          Text('processingFee: ${schedule.processingFee}'),
-                          Text('DepartureTime: ${schedule.departureTime}'),
-                        ],
-                      ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.more_vert),
-                        // onPressed: () => _showBottomSheet(route),
-                        onPressed: () => null,
-                      ),
-                    ),
+      body: Form(
+        key: _formKey,
+        child: Center(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            shrinkWrap: true,
+            children: [
+              Consumer<AppDataProvider>(
+                builder: (context, provider, child) => DropdownButtonFormField<Bus>(
+                  onChanged: (value) {
+                    setState(() {
+                      bus = value;
+                    });
+                  },
+                  isExpanded: true,
+                  value: bus,
+                  hint: const Text('Select Bus'),
+                  items: provider.busList
+                      .map((e) => DropdownMenuItem<Bus>(
+                    value: e,
+                    child: Text('${e.busName}-${e.busType}'),
+                  ))
+                      .toList(),
+                ),
+              ),
+              Consumer<AppDataProvider>(
+                builder: (context, provider, child) => DropdownButtonFormField<BusRoute>(
+                  onChanged: (value) {
+                    setState(() {
+                      busRoute = value;
+                    });
+                  },
+                  isExpanded: true,
+                  value: busRoute,
+                  hint: const Text('Select Route'),
+                  items: provider.routeList
+                      .map((e) => DropdownMenuItem<BusRoute>(
+                    value: e,
+                    child: Text(e.routeName),
+                  ))
+                      .toList(),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                controller: priceController,
+                decoration: const InputDecoration(
+                  hintText: 'Ticket Price',
+                  filled: true,
+                  prefixIcon: Icon(Icons.price_change),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return emptyFieldErrMessage;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                controller: discountController,
+                decoration: const InputDecoration(
+                  hintText: 'Discount(%)',
+                  filled: true,
+                  prefixIcon: Icon(Icons.discount),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return emptyFieldErrMessage;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                controller: feeController,
+                decoration: const InputDecoration(
+                  hintText: 'Processing Fee',
+                  filled: true,
+                  prefixIcon: Icon(Icons.monetization_on_outlined),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return emptyFieldErrMessage;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: _selectTime,
+                    child: const Text('Select Departure Time'),
                   ),
-                );
-              },
-            ),
-        ],
+                  Text(timeOfDay == null
+                      ? 'No time chosen'
+                      : getFormattedTime(timeOfDay!)),
+                ],
+              ),
+              Center(
+                child: SizedBox(
+                  width: 150,
+                  child: ElevatedButton(
+                    onPressed: addSchedule,
+                    child: const Text('ADD Schedule'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
+  void addSchedule() {
+    if(timeOfDay == null) {
+      showMsg(context, 'Please select a departure date');
+      return;
+    }
+    if (_formKey.currentState!.validate()) {
+      final schedule = BusSchedule(
+        //scheduleId: TempDB.tableSchedule.length + 1,
+        bus: bus!,
+        busRoute: busRoute!,
+        departureTime: getFormattedTime(timeOfDay!),
+        ticketPrice: int.parse(priceController.text),
+        discount: int.parse(discountController.text),
+        processingFee: int.parse(feeController.text),
+      );
+      print('calling...');
+      Provider.of<AppDataProvider>(context, listen: false)
+          .addSchedule(schedule)
+          .then((response) {
+        if (response.responseStatus == ResponseStatus.SAVED) {
+          showMsg(context, response.message);
+          resetFields();
+        } else if (response.responseStatus == ResponseStatus.EXPIRED ||
+            response.responseStatus == ResponseStatus.UNAUTHORIZED) {
+          print(response);
+          showLoginAlertDialog(
+            context: context,
+            message: response.message,
+            callback: () {
+              Navigator.pushNamed(context, routeNameLoginPage);
+            },
+          );
+        }
+      });
 
+    }
+  }
+
+  void _selectTime() async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
+    );
+    if(time != null) {
+      setState(() {
+        timeOfDay = time;
+      });
+    }
+  }
+
+  void resetFields() {
+    priceController.clear();
+    discountController.clear();
+    feeController.clear();
+  }
+
+  void _getData() {
+    Provider.of<AppDataProvider>(context, listen: false).getAllBus();
+    Provider.of<AppDataProvider>(context, listen: false).getAllBusRoutes();
+  }
 }

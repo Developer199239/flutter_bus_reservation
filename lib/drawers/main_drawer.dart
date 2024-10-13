@@ -91,7 +91,7 @@ class _MainDrawerState extends State<MainDrawer> {
         ListTile(
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, routeNameAddSchedulePage);
+            Navigator.pushNamed(context, routeNameScheduleListPage);
           },
           leading: const Icon(Icons.schedule),
           title: const Text('Add Schedule'),
