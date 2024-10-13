@@ -17,9 +17,12 @@ abstract class DataSource {
   Future<ResponseModel> deleteBus(int busId);
 
   Future<ResponseModel> addRoute(BusRoute busRoute);
+  Future<ResponseModel> updateRoute(BusRoute busRoute);
   Future<List<BusRoute>> getAllRoutes();
   Future<BusRoute?> getRouteByRouteName(String routeName);
   Future<BusRoute?> getRouteByCityFromAndCityTo(String cityFrom, String cityTo);
+
+
   Future<ResponseModel> addSchedule(BusSchedule busSchedule);
   Future<List<BusSchedule>> getAllSchedules();
   Future<List<BusSchedule>> getSchedulesByRouteName(String routeName);

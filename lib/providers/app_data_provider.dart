@@ -50,6 +50,10 @@ class AppDataProvider extends ChangeNotifier {
     return _dataSource.addRoute(route);
   }
 
+  Future<ResponseModel> updateRoute(BusRoute route) {
+    return _dataSource.updateRoute(route);
+  }
+
   Future<ResponseModel> addSchedule(BusSchedule busSchedule) {
     return _dataSource.addSchedule(busSchedule);
   }
@@ -75,6 +79,11 @@ class AppDataProvider extends ChangeNotifier {
   Future<void> getAllBusRoutes() async {
     _routeList = await _dataSource.getAllRoutes();
     notifyListeners();
+  }
+
+  Future<List<BusRoute>> getAllBusRouteList() async {
+    _routeList = await _dataSource.getAllRoutes();
+    return _routeList;
   }
 
   Future<List<BusReservation>> getAllReservations() async {
