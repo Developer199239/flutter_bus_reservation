@@ -16,7 +16,7 @@ import '../utils/helper_functions.dart';
 import 'data_source.dart';
 
 class AppDataSource extends DataSource {
-  final String baseUrl = 'http://192.168.0.102:8080/api/';
+  final String baseUrl = 'http://192.168.0.104:8080/api/';
 
   Map<String, String> get header => {'Content-Type': 'application/json'};
 

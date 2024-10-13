@@ -16,21 +16,32 @@ class AddCity extends StatefulWidget {
 class _AddCityState extends State<AddCity> {
   bool _isLoading = false;
   List<City> _cities = [];
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
-    _loadCities(); // Load the cities initially
+    _loadCities();
   }
 
   Future<void> _loadCities() async {
+    final appDataProvider =
+    Provider.of<AppDataProvider>(context, listen: false);
     setState(() => _isLoading = true);
     try {
-      _cities = await Provider.of<AppDataProvider>(context, listen: false)
-          .getAllCity();
+      final cities = await appDataProvider.getAllCity();
+      setState(() {
+        _cities = cities;
+        _isLoading = false;
+      });
     } catch (e) {
       print('Error loading cities: $e');
-    } finally {
       setState(() => _isLoading = false);
     }
   }
@@ -62,9 +73,28 @@ class _AddCityState extends State<AddCity> {
               itemCount: _cities.length,
               itemBuilder: (context, index) {
                 final city = _cities[index];
-                return ListTile(
-                  title: Text(city.cityName),
-                  onTap: () => _showBottomSheet(city),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+                      title: Text(
+                        city.cityName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.more_vert),
+                        onPressed: () => _showBottomSheet(city),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
@@ -74,6 +104,8 @@ class _AddCityState extends State<AddCity> {
   }
 
   Future<void> _addOrUpdateCity(City city, bool isAddCity) async {
+    final appDataProvider =
+    Provider.of<AppDataProvider>(context, listen: false);
     setState(() => _isLoading = true);
     if (await hasTokenExpired()) {
       setState(() => _isLoading = false);
@@ -89,13 +121,11 @@ class _AddCityState extends State<AddCity> {
 
     try {
       final response = isAddCity
-          ? await Provider.of<AppDataProvider>(context, listen: false)
-          .addCity(city)
-          : await Provider.of<AppDataProvider>(context, listen: false)
-          .updateCity(city);
+          ? await appDataProvider.addCity(city)
+          : await appDataProvider.updateCity(city);
 
       if (response.responseStatus == ResponseStatus.SAVED) {
-        _loadCities(); // Refresh list on successful add/update
+        _loadCities();
       } else {
         showMsg(context, response.message);
       }
@@ -107,9 +137,7 @@ class _AddCityState extends State<AddCity> {
   }
 
   void _showCityDialog({required bool isAddCity, City? city}) {
-    final TextEditingController _controller = TextEditingController(
-      text: isAddCity ? '' : city?.cityName,
-    );
+    _controller.text = isAddCity ? '' : city?.cityName ?? '';
 
     showDialog(
       context: context,
@@ -137,8 +165,8 @@ class _AddCityState extends State<AddCity> {
                 }
 
                 final newCity = City(cityName: newCityName);
-                if(!isAddCity) {
-                  newCity.cityId = city?.cityId!!;
+                if (!isAddCity) {
+                  newCity.cityId = city?.cityId!;
                 }
                 Navigator.of(context).pop();
                 _addOrUpdateCity(newCity, isAddCity);
@@ -182,6 +210,8 @@ class _AddCityState extends State<AddCity> {
   }
 
   Future<void> _deleteCity(BuildContext context, City city) async {
+    final appDataProvider =
+    Provider.of<AppDataProvider>(context, listen: false);
     setState(() => _isLoading = true);
     if (await hasTokenExpired()) {
       setState(() => _isLoading = false);
@@ -196,16 +226,15 @@ class _AddCityState extends State<AddCity> {
     }
 
     try {
-      final response = await Provider.of<AppDataProvider>(context, listen: false)
-          .deleteCity(city.cityId!);
+      final response = await appDataProvider.deleteCity(city.cityId!);
 
       if (response.responseStatus == ResponseStatus.SAVED) {
-        _loadCities(); // Reload list after successful deletion
+        _loadCities();
       } else {
         showMsg(context, response.message);
       }
     } catch (e) {
-      print('Error deleting city: $e');
+      showMsg(context, 'Error deleting city: $e');
     } finally {
       setState(() => _isLoading = false);
     }
