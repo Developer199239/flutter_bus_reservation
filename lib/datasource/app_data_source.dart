@@ -116,6 +116,30 @@ class AppDataSource extends DataSource {
   }
 
   @override
+  Future<ResponseModel> deleteBus(int busId) async{
+    final url = '$baseUrl${'bus/delete/$busId'}';
+    try {
+      final response =
+      await http.delete(Uri.parse(url), headers: await authHeader);
+      return await _getResponseModel(response);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ResponseModel> updateBus(Bus bus) async{
+    final url = '$baseUrl${'bus/update/${bus.busId}'}';
+    try {
+      final response = await http.put(Uri.parse(url),
+          headers: await authHeader, body: json.encode(bus.toJson()));
+      return await _getResponseModel(response);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<BusReservation>> getAllReservation() async {
     final url = '$baseUrl${'reservation/all'}';
     try {

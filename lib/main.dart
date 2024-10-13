@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightGreen,
         brightness: Brightness.dark,
       ),
-      initialRoute: routeNameHome,
+      // initialRoute: routeNameHome,
+      initialRoute: routeNameAddBusPage,
       routes: {
         routeNameHome : (context) => const SearchPage(),
         routeNameSearchResultPage : (context) => const SearchResultPage(),

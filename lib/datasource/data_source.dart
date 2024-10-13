@@ -7,12 +7,15 @@ import '../models/bus_reservation.dart';
 import '../models/bus_route.dart';
 import '../models/bus_schedule.dart';
 import '../models/response_model.dart';
-import '../utils/constants.dart';
 
 abstract class DataSource {
   Future<AuthResponseModel?> login(AppUser user);
+  // bus
   Future<ResponseModel> addBus(Bus bus);
   Future<List<Bus>> getAllBus();
+  Future<ResponseModel> updateBus(Bus bus);
+  Future<ResponseModel> deleteBus(int busId);
+
   Future<ResponseModel> addRoute(BusRoute busRoute);
   Future<List<BusRoute>> getAllRoutes();
   Future<BusRoute?> getRouteByRouteName(String routeName);
@@ -25,7 +28,7 @@ abstract class DataSource {
   Future<List<BusReservation>> getReservationsByMobile(String mobile);
   Future<List<BusReservation>> getReservationsByScheduleAndDepartureDate(int scheduleId, String departureDate);
 
-//   city
+  //city
   Future<List<City>> getAllCity();
   Future<ResponseModel> addCity(City city);
   Future<ResponseModel> deleteCity(int cityId);

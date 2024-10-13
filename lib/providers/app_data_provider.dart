@@ -42,6 +42,10 @@ class AppDataProvider extends ChangeNotifier {
     return _dataSource.addBus(bus);
   }
 
+  Future<ResponseModel> updateBus(Bus bus) {
+    return _dataSource.updateBus(bus);
+  }
+
   Future<ResponseModel> addRoute(BusRoute route) {
     return _dataSource.addRoute(route);
   }
@@ -57,6 +61,15 @@ class AppDataProvider extends ChangeNotifier {
   Future<void> getAllBus() async {
     _busList = await _dataSource.getAllBus();
     notifyListeners();
+  }
+
+  Future<ResponseModel> deleteBus(int busId) async {
+    return await _dataSource.deleteBus(busId);
+  }
+
+  Future<List<Bus>> getAllBusWithList() async {
+    _busList = await _dataSource.getAllBus();
+    return _busList;
   }
 
   Future<void> getAllBusRoutes() async {
