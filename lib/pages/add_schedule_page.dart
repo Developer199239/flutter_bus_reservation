@@ -282,6 +282,7 @@ class _AddSchedulePageState extends State<AddSchedulePage> {
       if (response.responseStatus == ResponseStatus.SAVED) {
         showMsg(context, response.message);
         resetFields();
+        Navigator.pop(context, true);
       } else if (response.responseStatus == ResponseStatus.EXPIRED ||
           response.responseStatus == ResponseStatus.UNAUTHORIZED) {
         showLoginAlertDialog(

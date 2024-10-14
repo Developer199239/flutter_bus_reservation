@@ -47,8 +47,12 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
         title: const Text('All Schedule'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, routeNameAddSchedulePage);
+        onPressed: () async {
+          // Navigator.pushNamed(context, routeNameAddSchedulePage);
+          final result = await Navigator.pushNamed(context, routeNameAddSchedulePage);
+          if (result == true) {
+            _loadSchedules(); // Reload the list when coming back
+          }
         },
         child: const Icon(Icons.add),
       ),
@@ -119,10 +123,18 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
               ListTile(
                 leading: const Icon(Icons.edit),
                 title: const Text('Update'),
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, routeNameAddSchedulePage,
-                      arguments: [busSchedule]);
+                  // Navigator.pushNamed(context, routeNameAddSchedulePage,
+                  //     arguments: [busSchedule]);
+                  final result = await Navigator.pushNamed(
+                    context,
+                    routeNameAddSchedulePage,
+                    arguments: [busSchedule],
+                  );
+                  if (result == true) {
+                    _loadSchedules(); // Reload the list when updated
+                  }
                 },
               ),
               ListTile(
