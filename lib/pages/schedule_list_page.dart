@@ -121,7 +121,8 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
                 title: const Text('Update'),
                 onTap: () {
                   Navigator.pop(context);
-                  // _showRouteDialog(isAddRoute: false, busRoute: busRoute);
+                  Navigator.pushNamed(context, routeNameAddSchedulePage,
+                      arguments: [busSchedule]);
                 },
               ),
               ListTile(

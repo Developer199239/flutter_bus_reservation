@@ -26,6 +26,7 @@ abstract class DataSource {
   Future<ResponseModel> addSchedule(BusSchedule busSchedule);
   Future<List<BusSchedule>> getAllSchedules();
   Future<List<BusSchedule>> getSchedulesByRouteName(String routeName);
+  Future<ResponseModel> updateBusSchedule(BusSchedule busSchedule);
 
   Future<ResponseModel> addReservation(BusReservation reservation);
   Future<List<BusReservation>> getAllReservation();

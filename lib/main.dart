@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       initialRoute: routeNameHome,
-      // initialRoute: routeNameAddSchedulePage,
+      // initialRoute: routeNameScheduleListPage,
       routes: {
         routeNameHome : (context) => const SearchPage(),
         routeNameSearchResultPage : (context) => const SearchResultPage(),

@@ -200,6 +200,18 @@ class AppDataSource extends DataSource {
   }
 
   @override
+  Future<ResponseModel> updateBusSchedule(BusSchedule busSchedule) async{
+    final url = '$baseUrl${'schedule/update/${busSchedule.scheduleId}'}';
+    try {
+      final response = await http.put(Uri.parse(url),
+          headers: await authHeader, body: json.encode(busSchedule.toJson()));
+      return await _getResponseModel(response);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<BusReservation>> getReservationsByMobile(String mobile) async {
     final url = '$baseUrl${'reservation/all/$mobile'}';
     try {
