@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../models/sign_up_model.dart';
@@ -204,15 +205,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   void _signUp() async {
     if (_formKey.currentState!.validate()) {
-      // final SignUpPagepPageUpModel = {
-      //   "userName": _userNameController.text,
-      //   "password": _passwordController.text,
-      //   "role": _roleController.text,
-      //   "customer_name": _customerNameController.text,
-      //   "email": _emailController.text,
-      //   "mobile": _mobileController.text,
-      // };
-
       SignUpModel signUpModel = SignUpModel(
           userName: _userNameController.text,
           password: _passwordController.text,
@@ -220,13 +212,13 @@ class _SignUpPageState extends State<SignUpPage> {
           customerName: _customerNameController.text,
           email: _emailController.text,
           mobile: _mobileController.text);
-
-      // Implement sign-up logic here
       print('User Data: ${signUpModel.toString()}');
 
+      EasyLoading.show(status: 'Searching...');
       final response =
           await Provider.of<AppDataProvider>(context, listen: false)
               .signup(signUpModel);
+      EasyLoading.dismiss();
       if (response != null && response.responseStatus == ResponseStatus.SAVED) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Sign up successful')),
@@ -238,7 +230,6 @@ class _SignUpPageState extends State<SignUpPage> {
           SnackBar(content: Text(msg)),
         );
       }
-
     }
   }
 }
