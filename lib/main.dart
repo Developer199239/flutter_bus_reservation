@@ -1,4 +1,5 @@
 import 'package:bus_reservation/pages/add_schedule_page.dart';
+import 'package:bus_reservation/pages/sign_up_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:bus_reservation/pages/add_bus_page.dart';
 import 'package:bus_reservation/pages/add_route_page.dart';
@@ -11,7 +12,6 @@ import 'package:bus_reservation/pages/search_result_page.dart';
 import 'package:bus_reservation/pages/seat_plan_page.dart';
 import 'package:bus_reservation/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/add_city.dart';
@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
         routeNameReservationPage : (context) => const ReservationPage(),
         routeNameLoginPage : (context) => const LoginPage(),
         routeNameAddCityPage : (context) => const AddCity(),
+        routeNameSignUpPage : (context) => const SignUpPage(),
       },
     );
   }
