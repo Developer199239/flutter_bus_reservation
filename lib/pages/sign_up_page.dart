@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/sign_up_model.dart';
+import '../providers/app_data_provider.dart';
+import '../utils/constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -28,12 +33,11 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void initState() {
     super.initState();
-    _roleController.text = 'user'; // Default role
+    _roleController.text = 'User'; // Default role
   }
 
   @override
   void dispose() {
-    // Dispose controllers and focus nodes to free resources
     _userNameController.dispose();
     _passwordController.dispose();
     _roleController.dispose();
@@ -105,6 +109,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 keyboardType: TextInputType.emailAddress,
                 focusNode: _emailFocusNode,
                 nextFocusNode: _mobileFocusNode,
+                emailValidation:
+                    true, // Add this parameter to enable email validation
               ),
               _buildTextField(
                 controller: _mobileController,
@@ -113,7 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 keyboardType: TextInputType.phone,
                 focusNode: _mobileFocusNode,
                 textInputAction: TextInputAction.done,
-                onEditingComplete: () => FocusScope.of(context).unfocus(), // Dismiss keyboard on done
+                onEditingComplete: () => FocusScope.of(context).unfocus(),
               ),
               const SizedBox(height: 20),
               Center(
@@ -145,6 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
     FocusNode? nextFocusNode,
     TextInputAction textInputAction = TextInputAction.next,
     VoidCallback? onEditingComplete,
+    bool emailValidation = false, // New parameter to enable email validation
   }) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
@@ -156,13 +163,14 @@ class _SignUpPageState extends State<SignUpPage> {
           labelText: label,
           suffixIcon: isPassword
               ? IconButton(
-            icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
-            onPressed: () {
-              setState(() {
-                isObscure = !isObscure;
-              });
-            },
-          )
+                  icon: Icon(
+                      obscureText ? Icons.visibility_off : Icons.visibility),
+                  onPressed: () {
+                    setState(() {
+                      isObscure = !isObscure;
+                    });
+                  },
+                )
               : null,
         ),
         keyboardType: keyboardType,
@@ -171,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
         focusNode: focusNode,
         textInputAction: textInputAction,
         onEditingComplete: onEditingComplete ??
-                () {
+            () {
               if (nextFocusNode != null) {
                 FocusScope.of(context).requestFocus(nextFocusNode);
               }
@@ -180,31 +188,57 @@ class _SignUpPageState extends State<SignUpPage> {
           if (value == null || value.isEmpty) {
             return 'This field must not be empty';
           }
+          if (emailValidation) {
+            const emailPattern =
+                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'; // Basic email pattern
+            final regExp = RegExp(emailPattern);
+            if (!regExp.hasMatch(value)) {
+              return 'Enter a valid email';
+            }
+          }
           return null;
         },
       ),
     );
   }
 
-  void _signUp() {
+  void _signUp() async {
     if (_formKey.currentState!.validate()) {
-      final userData = {
-        "userName": _userNameController.text,
-        "password": _passwordController.text,
-        "role": _roleController.text,
-        "customer_name": _customerNameController.text,
-        "email": _emailController.text,
-        "mobile": _mobileController.text,
-      };
+      // final SignUpPagepPageUpModel = {
+      //   "userName": _userNameController.text,
+      //   "password": _passwordController.text,
+      //   "role": _roleController.text,
+      //   "customer_name": _customerNameController.text,
+      //   "email": _emailController.text,
+      //   "mobile": _mobileController.text,
+      // };
+
+      SignUpModel signUpModel = SignUpModel(
+          userName: _userNameController.text,
+          password: _passwordController.text,
+          role: _roleController.text,
+          customerName: _customerNameController.text,
+          email: _emailController.text,
+          mobile: _mobileController.text);
 
       // Implement sign-up logic here
-      print('User Data: $userData');
+      print('User Data: ${signUpModel.toString()}');
 
-      // Show success message and navigate back or to another screen
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign up successful')),
-      );
-      Navigator.pop(context);
+      final response =
+          await Provider.of<AppDataProvider>(context, listen: false)
+              .signup(signUpModel);
+      if (response != null && response.responseStatus == ResponseStatus.SAVED) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sign up successful')),
+        );
+        Navigator.pop(context);
+      } else {
+        var msg = response?.message ?? "Sign up failed";
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(msg)),
+        );
+      }
+
     }
   }
 }

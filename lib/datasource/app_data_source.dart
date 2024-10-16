@@ -11,6 +11,7 @@ import '../models/bus_route.dart';
 import '../models/bus_schedule.dart';
 import '../models/error_details_model.dart';
 import '../models/response_model.dart';
+import '../models/sign_up_model.dart';
 import '../utils/constants.dart';
 import '../utils/helper_functions.dart';
 import 'data_source.dart';
@@ -38,6 +39,24 @@ class AppDataSource extends DataSource {
       print(map);
       final authResponseModel = AuthResponseModel.fromJson(map);
       return authResponseModel;
+    } catch (error) {
+      print(error.toString());
+      return null;
+    }
+  }
+
+  @override
+  Future<ResponseModel?> signUp(SignUpModel signUpModel) async {
+    final url = '$baseUrl${'auth/signup'}';
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: header,
+        body: json.encode(signUpModel.toJson()),
+      );
+      final map = json.decode(response.body);
+      print(map);
+      return await _getResponseModel(response);
     } catch (error) {
       print(error.toString());
       return null;
@@ -82,8 +101,6 @@ class AppDataSource extends DataSource {
       print(error.toString());
       rethrow;
     }
-
-    throw UnimplementedError();
   }
 
   @override

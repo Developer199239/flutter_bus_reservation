@@ -2,6 +2,7 @@ import 'package:bus_reservation/datasource/app_data_source.dart';
 import 'package:bus_reservation/models/app_user.dart';
 import 'package:bus_reservation/models/auth_response_model.dart';
 import 'package:bus_reservation/models/city_model.dart';
+import 'package:bus_reservation/models/sign_up_model.dart';
 import 'package:flutter/material.dart';
 
 import '../datasource/data_source.dart';
@@ -36,6 +37,10 @@ class AppDataProvider extends ChangeNotifier {
     await saveLoginTime(response.loginTime);
     await saveExpirationDuration(response.expirationDuration);
     return response;
+  }
+
+  Future<ResponseModel?> signup(SignUpModel signUpModel) async {
+    return await _dataSource.signUp(signUpModel);
   }
 
   Future<ResponseModel> addBus(Bus bus) {
