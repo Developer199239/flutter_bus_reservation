@@ -18,13 +18,32 @@ class _SearchPageState extends State<SearchPage> {
   String? fromCity, toCity;
   DateTime? departureDate;
   final _formKey = GlobalKey<FormState>();
+  List<String> _cityNames = [];
 
   @override
   void initState() {
-    fromCity = 'Dhaka';
-    toCity = 'Sylhet';
+    // fromCity = 'Dhaka';
+    // toCity = 'Sylhet';
     departureDate = DateTime.now();
     super.initState();
+    _loadCities();
+  }
+
+  Future<void> _loadCities() async {
+    final appDataProvider =
+    Provider.of<AppDataProvider>(context, listen: false);
+    EasyLoading.show(status: 'Searching...');
+    try {
+      final cities = await appDataProvider.getAllCity();
+      setState(() {
+        _cityNames = cities.map((city) => city.cityName).toList();
+        print('===city size: ${_cityNames.length}');
+      });
+    } catch (e) {
+      print('Error loading cities: $e');
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
   @override
@@ -52,9 +71,9 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(color: Colors.white),
                 ),
-                hint: const Text('From'),
+                hint: const Text('From City'),
                 isExpanded: true,
-                items: cities
+                items: _cityNames
                     .map((city) => DropdownMenuItem<String>(
                           value: city,
                           child: Text(city),
@@ -78,9 +97,9 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: InputDecoration(
                   errorStyle: const TextStyle(color: Colors.white),
                 ),
-                hint: const Text('To'),
+                hint: const Text('To City'),
                 isExpanded: true,
-                items: cities
+                items: _cityNames
                     .map((city) => DropdownMenuItem<String>(
                           value: city,
                           child: Text(city),
