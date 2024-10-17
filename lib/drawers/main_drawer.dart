@@ -119,6 +119,14 @@ class _MainDrawerState extends State<MainDrawer> {
         const HeaderView(),
         ListTile(
           onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, routeNameUserDetailsPage);
+          },
+          leading: const Icon(Icons.person),
+          title: const Text('My Profile'),
+        ),
+        ListTile(
+          onTap: () {
             // Navigator.pop(context);
             // Navigator.pushNamed(context, routeNameMyProfilePage);
           },

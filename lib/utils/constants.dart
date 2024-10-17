@@ -10,6 +10,7 @@ const String emptyFieldErrMessage = 'This field must not be empty';
 const String emptyDateErrMessage = 'Please select a departure date';
 const String accessToken = 'accessToken';
 const String userRole = 'userRole';
+const String userName = 'userName';
 const String loginTime = 'loginTime';
 const String expirationDuration = 'expirationDuration';
 const String routeNameHome = 'search';
@@ -24,6 +25,7 @@ const String routeNameScheduleListPage = 'schedule_list';
 const String routeNameReservationPage = 'reservation';
 const String routeNameAddCityPage = 'add_city';
 const String routeNameSignUpPage = 'sign_up';
+const String routeNameUserDetailsPage = 'user_details';
 const String unknownErrMessage = 'Unknown error!';
 
 

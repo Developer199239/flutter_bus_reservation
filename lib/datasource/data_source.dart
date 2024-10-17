@@ -1,4 +1,5 @@
 import 'package:bus_reservation/models/city_model.dart';
+import 'package:bus_reservation/models/user_info_model.dart';
 
 import '../models/app_user.dart';
 import '../models/auth_response_model.dart';
@@ -13,6 +14,8 @@ abstract class DataSource {
   Future<AuthResponseModel?> login(AppUser user);
 
   Future<ResponseModel?> signUp(SignUpModel signUpModel);
+
+  Future<ResponseModel> getUserInfo(String userName);
 
   // bus
   Future<ResponseModel> addBus(Bus bus);

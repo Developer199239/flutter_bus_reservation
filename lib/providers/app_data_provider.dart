@@ -3,6 +3,7 @@ import 'package:bus_reservation/models/app_user.dart';
 import 'package:bus_reservation/models/auth_response_model.dart';
 import 'package:bus_reservation/models/city_model.dart';
 import 'package:bus_reservation/models/sign_up_model.dart';
+import 'package:bus_reservation/models/user_info_model.dart';
 import 'package:flutter/material.dart';
 
 import '../datasource/data_source.dart';
@@ -33,6 +34,7 @@ class AppDataProvider extends ChangeNotifier {
     final response = await _dataSource.login(user);
     if(response == null) return null;
     await saveToken(response.accessToken);
+    await setLoggedInUserName(user.userName);
     await setLoggedInUserRole(response.role);
     await saveLoginTime(response.loginTime);
     await saveExpirationDuration(response.expirationDuration);
@@ -41,6 +43,10 @@ class AppDataProvider extends ChangeNotifier {
 
   Future<ResponseModel?> signup(SignUpModel signUpModel) async {
     return await _dataSource.signUp(signUpModel);
+  }
+
+  Future<ResponseModel> getUserInfo(String userName) async {
+    return _dataSource.getUserInfo(userName);
   }
 
   Future<ResponseModel> addBus(Bus bus) {

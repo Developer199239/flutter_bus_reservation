@@ -214,7 +214,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mobile: _mobileController.text);
       print('User Data: ${signUpModel.toString()}');
 
-      EasyLoading.show(status: 'Searching...');
+      EasyLoading.show(status: 'Signup user...');
       final response =
           await Provider.of<AppDataProvider>(context, listen: false)
               .signup(signUpModel);

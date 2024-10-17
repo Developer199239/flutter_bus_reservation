@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:bus_reservation/models/city_model.dart';
+import 'package:bus_reservation/models/user_info_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/app_user.dart';
@@ -60,6 +61,17 @@ class AppDataSource extends DataSource {
     } catch (error) {
       print(error.toString());
       return null;
+    }
+  }
+
+  @override
+  Future<ResponseModel> getUserInfo(String userName) async{
+    final url = '$baseUrl${'auth/$userName'}';
+    try {
+      final response = await http.get(Uri.parse(url));
+      return await _getResponseModel(response);
+    } catch (error) {
+      rethrow;
     }
   }
 
@@ -308,8 +320,12 @@ class AppDataSource extends DataSource {
     ResponseModel responseModel = ResponseModel();
     if (response.statusCode == 200) {
       status = ResponseStatus.SAVED;
-      responseModel = ResponseModel.fromJson(jsonDecode(response.body));
-      responseModel.responseStatus = status;
+      final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
+      responseModel = ResponseModel.fromJson(responseBody).copyWith(
+        responseStatus: status,
+        object: responseBody,
+      );
+      print(responseModel.toString());
     } else if (response.statusCode == 401 || response.statusCode == 403) {
       if (await hasTokenExpired()) {
         status = ResponseStatus.EXPIRED;

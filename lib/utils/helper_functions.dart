@@ -38,6 +38,16 @@ Future<bool> isUserLoggedIn() async {
   return pref.containsKey(accessToken) && pref.getString(accessToken)?.isNotEmpty == true;
 }
 
+Future<bool> setLoggedInUserName(String user) async {
+  final pref = await SharedPreferences.getInstance();
+  return pref.setString(userName, user);
+}
+
+Future<String> getLoggedInUserName() async {
+  final pref = await SharedPreferences.getInstance();
+  return pref.getString(userName) ?? '';
+}
+
 Future<bool> setLoggedInUserRole(String role) async {
   final pref = await SharedPreferences.getInstance();
   return pref.setString(userRole, role);
