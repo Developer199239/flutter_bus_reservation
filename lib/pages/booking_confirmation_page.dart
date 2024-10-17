@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 import '../models/bus_reservation.dart';
 import '../models/bus_schedule.dart';
 import '../models/customer.dart';
+import '../models/user_info_model.dart';
 import '../providers/app_data_provider.dart';
 import '../utils/constants.dart';
 import '../utils/helper_functions.dart';
@@ -26,13 +28,45 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
   final mobileController = TextEditingController();
   final emailController = TextEditingController();
   bool isFirst = true;
+  UserInfoModel? userInfoModel;
 
   @override
   void initState() {
-    nameController.text = 'Murtuza Rahman';
-    mobileController.text = '01738696439';
-    emailController.text = 'murtuza.rahman83@gmail.com';
     super.initState();
+    _getInfo();
+  }
+
+  Future<void> _getInfo() async {
+    final appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
+    EasyLoading.show(status: 'Loading user info...');
+    try {
+      String userName = await getLoggedInUserName();
+      final response = await appDataProvider.getUserInfo(userName);
+      if(response.responseStatus == ResponseStatus.SAVED) {
+        setState(() {
+          userInfoModel = UserInfoModel.fromJson(response.object);
+          nameController.text = userInfoModel!.customerName;
+          mobileController.text = userInfoModel!.mobile;
+          emailController.text = userInfoModel!.email;
+        });
+      } else  {
+        setState(() {
+          userInfoModel = null;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(response.message)),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        userInfoModel = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error loading user info: $e')),
+      );
+    } finally {
+      EasyLoading.dismiss();
+    }
   }
 
   @override
@@ -71,10 +105,11 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 4.0),
               child: TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(
+                readOnly: true,
+                decoration: const InputDecoration(
                   hintText: 'Customer Name',
                   filled: true,
-                  prefixIcon: const Icon(Icons.person),
+                  prefixIcon: Icon(Icons.person),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -91,12 +126,13 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 4.0),
               child: TextFormField(
+                readOnly: true,
                 keyboardType: TextInputType.phone,
                 controller: mobileController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Mobile Number',
                   filled: true,
-                  prefixIcon: const Icon(Icons.call),
+                  prefixIcon: Icon(Icons.call),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -113,12 +149,13 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 4.0),
               child: TextFormField(
+                readOnly: true,
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Email Address',
                   filled: true,
-                  prefixIcon: const Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
