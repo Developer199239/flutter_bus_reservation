@@ -22,22 +22,18 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    // fromCity = 'Dhaka';
-    // toCity = 'Sylhet';
     departureDate = DateTime.now();
     super.initState();
     _loadCities();
   }
 
   Future<void> _loadCities() async {
-    final appDataProvider =
-    Provider.of<AppDataProvider>(context, listen: false);
+    final appDataProvider = Provider.of<AppDataProvider>(context, listen: false);
     EasyLoading.show(status: 'Searching...');
     try {
       final cities = await appDataProvider.getAllCity();
       setState(() {
         _cityNames = cities.map((city) => city.cityName).toList();
-        print('===city size: ${_cityNames.length}');
       });
     } catch (e) {
       print('Error loading cities: $e');
@@ -53,93 +49,118 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         title: const Text('Search'),
       ),
-      body: Form(
-        key: _formKey,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(8),
-            children: [
-              DropdownButtonFormField<String>(
-                value: fromCity,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return emptyFieldErrMessage;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  errorStyle: const TextStyle(color: Colors.white),
-                ),
-                hint: const Text('From City'),
-                isExpanded: true,
-                items: _cityNames
-                    .map((city) => DropdownMenuItem<String>(
-                          value: city,
-                          child: Text(city),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  fromCity = value;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              DropdownButtonFormField<String>(
-                value: toCity,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return emptyFieldErrMessage;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  errorStyle: const TextStyle(color: Colors.white),
-                ),
-                hint: const Text('To City'),
-                isExpanded: true,
-                items: _cityNames
-                    .map((city) => DropdownMenuItem<String>(
-                          value: city,
-                          child: Text(city),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  toCity = value;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: _selectDate,
-                      child: const Text('Select Departure Date'),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Minimize Column height to content
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: fromCity,
+                  validator: (value) => value == null ? emptyFieldErrMessage : null,
+                  decoration: InputDecoration(
+                    labelText: 'From City',
+                    labelStyle: TextStyle(color: Colors.grey[400]),
+                    filled: true,
+                    fillColor: Colors.grey[900],
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.grey[800]!),
                     ),
-                    Text(departureDate == null
-                        ? 'No date chosen'
-                        : getFormattedDate(departureDate!,
-                            pattern: 'EEE MMM dd, yyyy')),
-                  ],
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: Colors.purpleAccent),
+                    ),
+                  ),
+                  isExpanded: true,
+                  dropdownColor: Colors.grey[900],
+                  items: _cityNames.map((city) {
+                    return DropdownMenuItem<String>(
+                      value: city,
+                      child: Text(city, style: const TextStyle(color: Colors.white)),
+                    );
+                  }).toList(),
+                  onChanged: (value) => setState(() => fromCity = value),
                 ),
-              ),
-              Center(
-                child: SizedBox(
-                  width: 150,
-                  child: ElevatedButton(
-                    onPressed: _search,
-                    child: const Text('SEARCH'),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: toCity,
+                  validator: (value) => value == null ? emptyFieldErrMessage : null,
+                  decoration: InputDecoration(
+                    labelText: 'To City',
+                    labelStyle: TextStyle(color: Colors.grey[400]),
+                    filled: true,
+                    fillColor: Colors.grey[900],
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: Colors.grey[800]!),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: Colors.purpleAccent),
+                    ),
+                  ),
+                  isExpanded: true,
+                  dropdownColor: Colors.grey[900],
+                  items: _cityNames.map((city) {
+                    return DropdownMenuItem<String>(
+                      value: city,
+                      child: Text(city, style: const TextStyle(color: Colors.white)),
+                    );
+                  }).toList(),
+                  onChanged: (value) => setState(() => toCity = value),
+                ),
+                const SizedBox(height: 16),
+                InkWell(
+                  onTap: _selectDate,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: Colors.grey[800]!),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Select Departure Date',
+                          style: TextStyle(color: Colors.grey[400]),
+                        ),
+                        Text(
+                          departureDate != null
+                              ? getFormattedDate(departureDate!, pattern: 'EEE MMM dd, yyyy')
+                              : 'No date chosen',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              )
-            ],
+                const SizedBox(height: 32), // Increase space before the button
+                ElevatedButton(
+                  onPressed: _search,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purpleAccent,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text('SEARCH', style: TextStyle(fontSize: 18)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
 
   void _selectDate() async {
     final selectedDate = await showDatePicker(
@@ -167,11 +188,9 @@ class _SearchPageState extends State<SearchPage> {
           .then((route) {
         EasyLoading.dismiss();
         if (route != null) {
-          print('route found');
           Navigator.pushNamed(context, routeNameSearchResultPage,
               arguments: [route, getFormattedDate(departureDate!)]);
         } else {
-          print('route found');
           showMsg(context, 'Could not find any route');
         }
       });
