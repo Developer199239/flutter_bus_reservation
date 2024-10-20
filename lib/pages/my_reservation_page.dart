@@ -17,47 +17,56 @@ class MyReservationPage extends StatefulWidget {
 
 class _MyReservationPageState extends State<MyReservationPage> {
   bool isFirst = true;
+  bool isLoading = true;  // Add loading state
   List<ReservationExpansionItem> items = [];
+
   @override
   void didChangeDependencies() {
-    if(isFirst) {
+    if (isFirst) {
       _getData();
+      isFirst = false;
     }
     super.didChangeDependencies();
   }
 
   _getData() async {
     String userName = await getLoggedInUserName();
-    final reservations = await Provider.of<AppDataProvider>(context, listen: false).getMyReservations(userName);
-    items = Provider.of<AppDataProvider>(context, listen: false).getExpansionItems(reservations);
+    final reservations = await Provider.of<AppDataProvider>(context, listen: false)
+        .getMyReservations(userName);
+    items = Provider.of<AppDataProvider>(context, listen: false)
+        .getExpansionItems(reservations);
     setState(() {
-
+      isLoading = false;  // Disable loading when data is fetched
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reservation List'),
       ),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())  // Show loading spinner
+          : SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
           children: [
-            // SearchBox(onSubmit: (value) {
-            //   _search(value);
-            // }),
+            const SizedBox(height: 10),  // Add spacing
             ExpansionPanelList(
               expansionCallback: (index, isExpanded) {
                 setState(() {
                   items[index].isExpanded = !items[index].isExpanded;
-                  print("Item at index $index is now ${items[index].isExpanded}");
                 });
               },
-              children: items.map((item) => ExpansionPanel(
+              children: items.map((item) {
+                return ExpansionPanel(
                   isExpanded: item.isExpanded,
                   headerBuilder: (context, isExpanded) => ReservationItemHeaderView(header: item.header),
-                  body: ReservationItemBodyView(body: item.body,)
-              )).toList(),
+                  body: ReservationItemBodyView(body: item.body),
+                  canTapOnHeader: true,  // Make header tappable to expand
+                );
+              }).toList(),
             ),
           ],
         ),

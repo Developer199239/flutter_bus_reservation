@@ -9,15 +9,28 @@ class ReservationItemHeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),  // Card margin
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: ListTile(
-        title: Text('${header.departureDate} ${header.schedule.departureTime}'),
+        title: Text(
+          '${header.departureDate} ${header.schedule.departureTime}',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${header.schedule.busRoute.routeName}-${header.schedule.bus.busType}'),
-            Text('Booking Time: ${getFormattedDate(DateTime.fromMillisecondsSinceEpoch(header.timestamp), pattern: 'EEE MMM dd yyyy HH:mm')}'),
+            const SizedBox(height: 4),  // Adjust spacing
+            Text(
+              '${header.schedule.busRoute.routeName} - ${header.schedule.bus.busType}',
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Booking Time: ${getFormattedDate(DateTime.fromMillisecondsSinceEpoch(header.timestamp), pattern: 'EEE MMM dd yyyy HH:mm')}',
+              style: const TextStyle(fontSize: 12, color: Colors.grey),
+            ),
           ],
         ),
       ),

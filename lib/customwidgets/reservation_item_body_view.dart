@@ -9,17 +9,44 @@ class ReservationItemBodyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8),
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDetailRow('Customer Name', body.userInfoModel.customerName),
+            _buildDetailRow('Mobile', body.userInfoModel.mobile),
+            _buildDetailRow('Email', body.userInfoModel.email),
+            _buildDetailRow('Total Seat', '${body.totalSeatedBooked}'),
+            _buildDetailRow('Seat Numbers', body.seatNumbers),
+            _buildDetailRow('Total Price', '$currency${body.totalPrice}'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper to build a key-value style row
+  Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      padding: const EdgeInsets.symmetric(vertical: 4),  // Add vertical space between rows
+      child: Row(
         children: [
-          Text('Customer Name: ${body.userInfoModel.customerName}'),
-          Text('Customer Mobile: ${body.userInfoModel.mobile}'),
-          Text('Customer Email: ${body.userInfoModel.email}'),
-          Text('Total Seat: ${body.totalSeatedBooked}'),
-          Text('Seat Numbers: ${body.seatNumbers}'),
-          Text('Total Price: $currency${body.totalPrice}'),
+          Expanded(
+            flex: 2,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Text(value, style: const TextStyle(color: Colors.grey)),
+          ),
         ],
       ),
     );
