@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../drawers/main_drawer.dart';
 import '../models/bus_schedule.dart';
 import '../providers/app_data_provider.dart';
 import '../utils/constants.dart';
@@ -46,6 +47,7 @@ class _ScheduleListPageState extends State<ScheduleListPage> {
       appBar: AppBar(
         title: const Text('All Schedule'),
       ),
+      drawer: const MainDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Navigator.pushNamed(context, routeNameAddSchedulePage);

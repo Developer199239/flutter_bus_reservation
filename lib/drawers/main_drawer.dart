@@ -96,14 +96,14 @@ class _MainDrawerState extends State<MainDrawer> {
           leading: const Icon(Icons.route),
           title: const Text('Add Route'),
         ),
-        ListTile(
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, routeNameScheduleListPage);
-          },
-          leading: const Icon(Icons.schedule),
-          title: const Text('Add Schedule'),
-        ),
+        // ListTile(
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //     Navigator.pushNamed(context, routeNameScheduleListPage);
+        //   },
+        //   leading: const Icon(Icons.schedule),
+        //   title: const Text('Add Schedule'),
+        // ),
         ListTile(
           onTap: () {
             Navigator.pop(context);
