@@ -185,6 +185,22 @@ class AppDataSource extends DataSource {
   }
 
   @override
+  Future<List<BusReservation>> getMyReservation(String userName) async {
+    final url = '$baseUrl${'reservation/all/$userName'}';
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final mapList = json.decode(response.body) as List;
+        return List.generate(
+            mapList.length, (index) => BusReservation.fromJson(mapList[index]));
+      }
+      return [];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<BusRoute>> getAllRoutes() async {
     final url = '$baseUrl${'route/all'}';
     try {

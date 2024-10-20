@@ -27,6 +27,7 @@ const String routeNameReservationPage = 'reservation';
 const String routeNameAddCityPage = 'add_city';
 const String routeNameSignUpPage = 'sign_up';
 const String routeNameUserDetailsPage = 'user_details';
+const String routeNameMyReservation = 'my_reservation';
 const String unknownErrMessage = 'Unknown error!';
 
 

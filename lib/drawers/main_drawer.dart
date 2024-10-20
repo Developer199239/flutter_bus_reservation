@@ -127,8 +127,8 @@ class _MainDrawerState extends State<MainDrawer> {
         ),
         ListTile(
           onTap: () {
-            // Navigator.pop(context);
-            // Navigator.pushNamed(context, routeNameMyProfilePage);
+            Navigator.pop(context);
+            Navigator.pushNamed(context, routeNameMyReservation);
           },
           leading: const Icon(Icons.bus_alert),
           title: const Text('My Reservation'),

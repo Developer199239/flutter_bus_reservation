@@ -118,6 +118,12 @@ class AppDataProvider extends ChangeNotifier {
     return _reservationList;
   }
 
+  Future<List<BusReservation>> getMyReservations(String userName) async {
+    _reservationList = await _dataSource.getMyReservation(userName);
+    notifyListeners();
+    return _reservationList;
+  }
+
   Future<List<BusReservation>> getReservationsByMobile(String mobile) {
     return _dataSource.getReservationsByMobile(mobile);
   }

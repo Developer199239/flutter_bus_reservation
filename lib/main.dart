@@ -1,4 +1,5 @@
 import 'package:bus_reservation/pages/add_schedule_page.dart';
+import 'package:bus_reservation/pages/my_reservation_page.dart';
 import 'package:bus_reservation/pages/sign_up_page.dart';
 import 'package:bus_reservation/pages/user_details_page.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         routeNameAddCityPage : (context) => const AddCity(),
         routeNameSignUpPage : (context) => const SignUpPage(),
         routeNameUserDetailsPage : (context) => const UserDetailsPage(),
+        routeNameMyReservation : (context) => const MyReservationPage(),
       },
     );
   }
