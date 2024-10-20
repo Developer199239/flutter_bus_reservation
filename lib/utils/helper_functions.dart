@@ -48,6 +48,16 @@ Future<String> getLoggedInUserName() async {
   return pref.getString(userName) ?? '';
 }
 
+Future<bool> setLoggedInUserId(String id) async {
+  final pref = await SharedPreferences.getInstance();
+  return pref.setString(userId, id);
+}
+
+Future<String> getLoggedInUserId() async {
+  final pref = await SharedPreferences.getInstance();
+  return pref.getString(userId) ?? '';
+}
+
 Future<bool> setLoggedInUserRole(String role) async {
   final pref = await SharedPreferences.getInstance();
   return pref.setString(userRole, role);

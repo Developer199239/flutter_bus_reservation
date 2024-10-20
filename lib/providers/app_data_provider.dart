@@ -36,6 +36,7 @@ class AppDataProvider extends ChangeNotifier {
     await saveToken(response.accessToken);
     await setLoggedInUserName(user.userName);
     await setLoggedInUserRole(response.role);
+    await setLoggedInUserId(response.userId);
     await saveLoginTime(response.loginTime);
     await saveExpirationDuration(response.expirationDuration);
     return response;
@@ -148,7 +149,7 @@ class AppDataProvider extends ChangeNotifier {
           reservationStatus: reservation.reservationStatus,
         ),
         body: ReservationExpansionBody(
-          customer: reservation.customer,
+          userInfoModel: reservation.appUser,
           totalSeatedBooked: reservation.totalSeatBooked,
           seatNumbers: reservation.seatNumbers,
           totalPrice: reservation.totalPrice,

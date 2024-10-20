@@ -9,7 +9,7 @@ part of 'bus_reservation.dart';
 _$BusReservationImpl _$$BusReservationImplFromJson(Map<String, dynamic> json) =>
     _$BusReservationImpl(
       reservationId: (json['reservationId'] as num?)?.toInt(),
-      customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
+      appUser: UserInfoModel.fromJson(json['appUser'] as Map<String, dynamic>),
       busSchedule:
           BusSchedule.fromJson(json['busSchedule'] as Map<String, dynamic>),
       timestamp: (json['timestamp'] as num).toInt(),
@@ -24,7 +24,7 @@ Map<String, dynamic> _$$BusReservationImplToJson(
         _$BusReservationImpl instance) =>
     <String, dynamic>{
       'reservationId': instance.reservationId,
-      'customer': instance.customer,
+      'appUser': instance.appUser,
       'busSchedule': instance.busSchedule,
       'timestamp': instance.timestamp,
       'departureDate': instance.departureDate,

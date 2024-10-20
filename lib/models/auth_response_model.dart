@@ -5,6 +5,7 @@ class AuthResponseModel {
   int loginTime;
   int expirationDuration;
   String role;
+  String userId;
 
   AuthResponseModel({
     required this.statusCode,
@@ -12,7 +13,8 @@ class AuthResponseModel {
     required this.accessToken,
     required this.loginTime,
     required this.expirationDuration,
-    required this.role
+    required this.role,
+    required this.userId
   });
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json) => AuthResponseModel(
@@ -22,5 +24,6 @@ class AuthResponseModel {
     loginTime: json['loginTime'],
     expirationDuration: json['expirationDuration'],
     role: json['role'],
+    userId: json['userId'],
   );
 }

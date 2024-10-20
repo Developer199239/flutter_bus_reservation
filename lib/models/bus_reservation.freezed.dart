@@ -22,8 +22,8 @@ BusReservation _$BusReservationFromJson(Map<String, dynamic> json) {
 mixin _$BusReservation {
   int? get reservationId => throw _privateConstructorUsedError;
   set reservationId(int? value) => throw _privateConstructorUsedError;
-  Customer get customer => throw _privateConstructorUsedError;
-  set customer(Customer value) => throw _privateConstructorUsedError;
+  UserInfoModel get appUser => throw _privateConstructorUsedError;
+  set appUser(UserInfoModel value) => throw _privateConstructorUsedError;
   BusSchedule get busSchedule => throw _privateConstructorUsedError;
   set busSchedule(BusSchedule value) => throw _privateConstructorUsedError;
   int get timestamp => throw _privateConstructorUsedError;
@@ -57,7 +57,7 @@ abstract class $BusReservationCopyWith<$Res> {
   @useResult
   $Res call(
       {int? reservationId,
-      Customer customer,
+      UserInfoModel appUser,
       BusSchedule busSchedule,
       int timestamp,
       String departureDate,
@@ -66,7 +66,7 @@ abstract class $BusReservationCopyWith<$Res> {
       String reservationStatus,
       int totalPrice});
 
-  $CustomerCopyWith<$Res> get customer;
+  $UserInfoModelCopyWith<$Res> get appUser;
   $BusScheduleCopyWith<$Res> get busSchedule;
 }
 
@@ -86,7 +86,7 @@ class _$BusReservationCopyWithImpl<$Res, $Val extends BusReservation>
   @override
   $Res call({
     Object? reservationId = freezed,
-    Object? customer = null,
+    Object? appUser = null,
     Object? busSchedule = null,
     Object? timestamp = null,
     Object? departureDate = null,
@@ -100,10 +100,10 @@ class _$BusReservationCopyWithImpl<$Res, $Val extends BusReservation>
           ? _value.reservationId
           : reservationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      customer: null == customer
-          ? _value.customer
-          : customer // ignore: cast_nullable_to_non_nullable
-              as Customer,
+      appUser: null == appUser
+          ? _value.appUser
+          : appUser // ignore: cast_nullable_to_non_nullable
+              as UserInfoModel,
       busSchedule: null == busSchedule
           ? _value.busSchedule
           : busSchedule // ignore: cast_nullable_to_non_nullable
@@ -139,9 +139,9 @@ class _$BusReservationCopyWithImpl<$Res, $Val extends BusReservation>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CustomerCopyWith<$Res> get customer {
-    return $CustomerCopyWith<$Res>(_value.customer, (value) {
-      return _then(_value.copyWith(customer: value) as $Val);
+  $UserInfoModelCopyWith<$Res> get appUser {
+    return $UserInfoModelCopyWith<$Res>(_value.appUser, (value) {
+      return _then(_value.copyWith(appUser: value) as $Val);
     });
   }
 
@@ -166,7 +166,7 @@ abstract class _$$BusReservationImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? reservationId,
-      Customer customer,
+      UserInfoModel appUser,
       BusSchedule busSchedule,
       int timestamp,
       String departureDate,
@@ -176,7 +176,7 @@ abstract class _$$BusReservationImplCopyWith<$Res>
       int totalPrice});
 
   @override
-  $CustomerCopyWith<$Res> get customer;
+  $UserInfoModelCopyWith<$Res> get appUser;
   @override
   $BusScheduleCopyWith<$Res> get busSchedule;
 }
@@ -195,7 +195,7 @@ class __$$BusReservationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? reservationId = freezed,
-    Object? customer = null,
+    Object? appUser = null,
     Object? busSchedule = null,
     Object? timestamp = null,
     Object? departureDate = null,
@@ -209,10 +209,10 @@ class __$$BusReservationImplCopyWithImpl<$Res>
           ? _value.reservationId
           : reservationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      customer: null == customer
-          ? _value.customer
-          : customer // ignore: cast_nullable_to_non_nullable
-              as Customer,
+      appUser: null == appUser
+          ? _value.appUser
+          : appUser // ignore: cast_nullable_to_non_nullable
+              as UserInfoModel,
       busSchedule: null == busSchedule
           ? _value.busSchedule
           : busSchedule // ignore: cast_nullable_to_non_nullable
@@ -250,7 +250,7 @@ class __$$BusReservationImplCopyWithImpl<$Res>
 class _$BusReservationImpl implements _BusReservation {
   _$BusReservationImpl(
       {this.reservationId,
-      required this.customer,
+      required this.appUser,
       required this.busSchedule,
       required this.timestamp,
       required this.departureDate,
@@ -265,7 +265,7 @@ class _$BusReservationImpl implements _BusReservation {
   @override
   int? reservationId;
   @override
-  Customer customer;
+  UserInfoModel appUser;
   @override
   BusSchedule busSchedule;
   @override
@@ -283,7 +283,7 @@ class _$BusReservationImpl implements _BusReservation {
 
   @override
   String toString() {
-    return 'BusReservation(reservationId: $reservationId, customer: $customer, busSchedule: $busSchedule, timestamp: $timestamp, departureDate: $departureDate, totalSeatBooked: $totalSeatBooked, seatNumbers: $seatNumbers, reservationStatus: $reservationStatus, totalPrice: $totalPrice)';
+    return 'BusReservation(reservationId: $reservationId, appUser: $appUser, busSchedule: $busSchedule, timestamp: $timestamp, departureDate: $departureDate, totalSeatBooked: $totalSeatBooked, seatNumbers: $seatNumbers, reservationStatus: $reservationStatus, totalPrice: $totalPrice)';
   }
 
   /// Create a copy of BusReservation
@@ -306,7 +306,7 @@ class _$BusReservationImpl implements _BusReservation {
 abstract class _BusReservation implements BusReservation {
   factory _BusReservation(
       {int? reservationId,
-      required Customer customer,
+      required UserInfoModel appUser,
       required BusSchedule busSchedule,
       required int timestamp,
       required String departureDate,
@@ -322,8 +322,8 @@ abstract class _BusReservation implements BusReservation {
   int? get reservationId;
   set reservationId(int? value);
   @override
-  Customer get customer;
-  set customer(Customer value);
+  UserInfoModel get appUser;
+  set appUser(UserInfoModel value);
   @override
   BusSchedule get busSchedule;
   set busSchedule(BusSchedule value);

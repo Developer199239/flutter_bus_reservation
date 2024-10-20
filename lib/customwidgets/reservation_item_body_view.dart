@@ -14,9 +14,9 @@ class ReservationItemBodyView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Customer Name: ${body.customer.customerName}'),
-          Text('Customer Mobile: ${body.customer.mobile}'),
-          Text('Customer Email: ${body.customer.email}'),
+          Text('Customer Name: ${body.userInfoModel.customerName}'),
+          Text('Customer Mobile: ${body.userInfoModel.mobile}'),
+          Text('Customer Email: ${body.userInfoModel.email}'),
           Text('Total Seat: ${body.totalSeatedBooked}'),
           Text('Seat Numbers: ${body.seatNumbers}'),
           Text('Total Price: $currency${body.totalPrice}'),

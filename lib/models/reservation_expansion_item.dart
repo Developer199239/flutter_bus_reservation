@@ -1,6 +1,6 @@
 
 import 'bus_schedule.dart';
-import 'customer.dart';
+import 'user_info_model.dart';
 
 class ReservationExpansionItem {
   ReservationExpansionHeader header;
@@ -31,13 +31,13 @@ class ReservationExpansionHeader {
 }
 
 class ReservationExpansionBody {
-  Customer customer;
+  UserInfoModel userInfoModel;
   int totalSeatedBooked;
   String seatNumbers;
   int totalPrice;
 
   ReservationExpansionBody({
-    required this.customer,
+    required this.userInfoModel,
     required this.totalSeatedBooked,
     required this.seatNumbers,
     required this.totalPrice,

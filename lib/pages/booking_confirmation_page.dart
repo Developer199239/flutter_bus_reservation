@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../models/bus_reservation.dart';
 import '../models/bus_schedule.dart';
-import '../models/customer.dart';
 import '../models/user_info_model.dart';
 import '../providers/app_data_provider.dart';
 import '../utils/constants.dart';
@@ -253,14 +252,8 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
 
   void _confirmBooking() {
     if (_formKey.currentState!.validate()) {
-      final customer = Customer(
-        customerName: nameController.text,
-        mobile: mobileController.text,
-        email: emailController.text,
-      );
-
       final reservation = BusReservation(
-        customer: customer,
+        appUser: userInfoModel!,
         busSchedule: schedule,
         timestamp: DateTime.now().millisecondsSinceEpoch,
         departureDate: departureDate,
