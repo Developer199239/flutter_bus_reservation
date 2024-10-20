@@ -11,6 +11,7 @@ const String emptyDateErrMessage = 'Please select a departure date';
 const String accessToken = 'accessToken';
 const String userRole = 'userRole';
 const String userName = 'userName';
+const String userMobile = 'userMobile';
 const String userId = 'userId';
 const String loginTime = 'loginTime';
 const String expirationDuration = 'expirationDuration';

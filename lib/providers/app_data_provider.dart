@@ -36,6 +36,7 @@ class AppDataProvider extends ChangeNotifier {
     await saveToken(response.accessToken);
     await setLoggedInUserName(user.userName);
     await setLoggedInUserRole(response.role);
+    await setLoggedInUserMobile(response.mobile);
     await setLoggedInUserId(response.userId);
     await saveLoginTime(response.loginTime);
     await saveExpirationDuration(response.expirationDuration);

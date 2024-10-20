@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/HeaderView.dart';
 import '../utils/constants.dart';
 import '../utils/helper_functions.dart';
 
@@ -14,27 +15,27 @@ class MainDrawer extends StatefulWidget {
 class _MainDrawerState extends State<MainDrawer> {
   bool isLoggedIn = false;
   String userRole = '';
+  String userName = '';
+  String userMobile = '';
 
   @override
   void initState() {
-    print('========loading====');
-    _loadLoginState();
     super.initState();
+    _loadLoginState();
   }
 
   Future<void> _loadLoginState() async {
-    // Fetch the values asynchronously first
     bool loginStatus = await isUserLoggedIn();
     String role = await getLoggedInUserRole();
+    String name = await getLoggedInUserName();
+    String mobile = await getLoggedInUserMobile();
 
-    // Once fetched, update the state synchronously
     setState(() {
       isLoggedIn = loginStatus;
       userRole = role;
+      userName = name;
+      userMobile = mobile;
     });
-
-    print('====isLoggedIn:$isLoggedIn');
-    print('====userRole:$userRole');
   }
 
   @override
@@ -46,11 +47,20 @@ class _MainDrawerState extends State<MainDrawer> {
     );
   }
 
-  // Build the menu based on the login state and role
   List<Widget> _buildDrawerMenu(BuildContext context) {
+    return [
+      HeaderView(
+        isLoggedIn: isLoggedIn,
+        userName: userName,
+        userEmail: userMobile,
+      ),
+      ..._buildMenuItems(context),
+    ];
+  }
+
+  List<Widget> _buildMenuItems(BuildContext context) {
     if (!isLoggedIn) {
       return [
-        const HeaderView(),
         ListTile(
           onTap: () {
             Navigator.pop(context);
@@ -61,9 +71,7 @@ class _MainDrawerState extends State<MainDrawer> {
         ),
       ];
     } else if (userRole == 'Admin') {
-      // If logged in as admin, show admin-specific menus
       return [
-        const HeaderView(),
         ListTile(
           onTap: () {
             Navigator.pop(context);
@@ -83,22 +91,6 @@ class _MainDrawerState extends State<MainDrawer> {
         ListTile(
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, routeNameAddRoutePage);
-          },
-          leading: const Icon(Icons.route),
-          title: const Text('Add Route'),
-        ),
-        ListTile(
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, routeNameScheduleListPage);
-          },
-          leading: const Icon(Icons.schedule),
-          title: const Text('Add Schedule'),
-        ),
-        ListTile(
-          onTap: () {
-            Navigator.pop(context);
             Navigator.pushNamed(context, routeNameReservationPage);
           },
           leading: const Icon(Icons.book_online),
@@ -114,9 +106,7 @@ class _MainDrawerState extends State<MainDrawer> {
         ),
       ];
     } else if (userRole == 'User') {
-      // If logged in as a regular user, show user-specific menus
       return [
-        const HeaderView(),
         ListTile(
           onTap: () {
             Navigator.pop(context);
@@ -144,7 +134,6 @@ class _MainDrawerState extends State<MainDrawer> {
       ];
     } else {
       return [
-        const HeaderView(),
         ListTile(
           onTap: () {
             Navigator.pop(context);
@@ -155,26 +144,16 @@ class _MainDrawerState extends State<MainDrawer> {
         ),
       ];
     }
-
-    return []; // Default: No menus if neither logged in nor role identified
   }
 
   void _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-  }
-}
-
-class HeaderView extends StatelessWidget {
-  const HeaderView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      color: Colors.grey,
-    );
+    setState(() {
+      isLoggedIn = false;
+      userRole = '';
+      userName = '';
+      userMobile = '';
+    });
   }
 }
