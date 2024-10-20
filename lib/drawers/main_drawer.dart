@@ -52,7 +52,7 @@ class _MainDrawerState extends State<MainDrawer> {
       HeaderView(
         isLoggedIn: isLoggedIn,
         userName: userName,
-        userEmail: userMobile,
+        userMobile: userMobile,
       ),
       ..._buildMenuItems(context),
     ];

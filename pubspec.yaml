@@ -43,6 +43,7 @@ dependencies:
   json_annotation:
   flutter_easyloading:
   go_router:
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:

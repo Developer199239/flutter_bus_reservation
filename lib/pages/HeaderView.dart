@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HeaderView extends StatelessWidget {
   final bool isLoggedIn;
   final String userName;
-  final String userEmail;
+  final String userMobile;
 
   const HeaderView({
-    Key? key,
+    super.key,
     required this.isLoggedIn,
     required this.userName,
-    required this.userEmail,
-  }) : super(key: key);
+    required this.userMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +30,21 @@ class HeaderView extends StatelessWidget {
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey[200],
-            backgroundImage: isLoggedIn
-                ? const NetworkImage(
-              'https://via.placeholder.com/150', // Replace with user image if available
+            child: isLoggedIn
+                ? CachedNetworkImage(
+              imageUrl: 'https://via.placeholder.com/150', // Replace with user image if available
+              placeholder: (context, url) => const CircularProgressIndicator(), // Loading placeholder
+              errorWidget: (context, url, error) => const Icon(Icons.error), // Error handling
+              imageBuilder: (context, imageProvider) => CircleAvatar(
+                radius: 40,
+                backgroundImage: imageProvider,
+              ),
             )
-                : null,
-            child: !isLoggedIn
-                ? const Icon(
+                : const Icon(
               Icons.person,
               size: 50,
               color: Colors.grey,
-            )
-                : null,
+            ),
           ),
           const SizedBox(height: 10),
           isLoggedIn
@@ -55,7 +59,7 @@ class HeaderView extends StatelessWidget {
                 ),
               ),
               Text(
-                userEmail,
+                userMobile,
                 style: const TextStyle(
                   color: Colors.white70,
                   fontSize: 14,
