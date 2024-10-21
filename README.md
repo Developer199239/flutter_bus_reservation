@@ -44,7 +44,7 @@ Include key screenshots of the app’s UI here, such as the following examples:
 
 | Admin Login                                                                | User sign up                                                               |
 |----------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| <img src="screen_shot/admin_login.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/sign_up.png" alt="Admin Dashboard" width="300"/> |
+| <img src="screen_shot/admin_login.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/sign_up.png" alt="Admin Dashboard"/> |
 
 | Admin Drawer                                                               | User drawer menu                                                           |
 |----------------------------------------------------------------------------|----------------------------------------------------------------------------|
@@ -90,9 +90,8 @@ Here are the core libraries used in the Flutter project to build the frontend an
 #### Backend (Spring Boot API)
 
 Clone the backend repository:
-   ```bash
-   git clone https://github.com/Developer199239/spring-boot-bus-reservation-api.git
-   ```
+
+[https://github.com/Developer199239/spring-boot-bus-reservation-api.git](https://github.com/Developer199239/spring-boot-bus-reservation-api.git)
 
 ## Contributing
 
