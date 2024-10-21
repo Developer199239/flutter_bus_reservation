@@ -44,7 +44,7 @@ Include key screenshots of the app’s UI here, such as the following examples:
 
 | Admin Login                                                                | User sign up                                                               |
 |----------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| <img src="screen_shot/admin_login.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/sign_up.png" alt="Admin Dashboard"/> |
+| <img src="screen_shot/admin_login.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/sign_up.png" alt="Admin Dashboard" width="300"/> |
 
 | Admin Drawer                                                               | User drawer menu                                                           |
 |----------------------------------------------------------------------------|----------------------------------------------------------------------------|
