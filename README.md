@@ -10,11 +10,7 @@ This project is a **Flutter** mobile application that integrates with a **Spring
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Key Libraries](#key-libraries)
-- [Getting Started](#getting-started)
-- [API Integration](#api-integration)
 - [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ---
 
@@ -46,13 +42,33 @@ This app allows users to search for available buses, make reservations, and mana
 
 Include key screenshots of the app’s UI here, such as the following examples:
 
-| Admin Dashboard  | User Bus Search |
-| ---------------- | --------------- |
-| ![Admin Dashboard](link_to_admin_dashboard_screenshot) | ![User Bus Search](link_to_bus_search_screenshot) |
+| Admin Login                                                                | User sign up                                                               |
+|----------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| <img src="screen_shot/admin_login.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/sign_up.png" alt="Admin Dashboard" width="300"/> |
 
-| Reservation List | User Profile |
-| ---------------- | ------------ |
-| ![Reservation List](link_to_reservation_list_screenshot) | ![User Profile](link_to_user_profile_screenshot) |
+| Admin Drawer                                                               | User drawer menu                                                           |
+|----------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| <img src="screen_shot/admin_drawer.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_drawer_menu.png" alt="Admin Dashboard" width="300"/> |
+
+| Admin add bus                                                               | User Bus Search |
+|-----------------------------------------------------------------------------| --------------- |
+| <img src="screen_shot/add_bus.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_bus_search.png" alt="Admin Dashboard" width="300"/> |
+
+| Admin add city                                                         | User search result                                                         |
+|------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| <img src="screen_shot/add_city.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_search_result.png" alt="Admin Dashboard" width="300"/> |
+
+| Admin add schedule                                                          | User seat plan                                                             |
+|-----------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| <img src="screen_shot/add_schedule.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_seat_plan.png" alt="Admin Dashboard" width="300"/> |
+
+| Admin reservation list                                                                | User seat plan                                                                  |
+|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| <img src="screen_shot/admin_reservation_list.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_seat_plan_1.png" alt="Admin Dashboard" width="300"/> |
+
+| Admin all schedule                                                          | User booking confirm                                                       |
+|-----------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| <img src="screen_shot/all_schedule.png" alt="Admin Dashboard" width="300"/> | <img src="screen_shot/user_booking_confirm.png" alt="Admin Dashboard" width="300"/> |
 
 ---
 
