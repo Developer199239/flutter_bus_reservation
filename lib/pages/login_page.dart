@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.all(32.0),
                 child: Text(
-                  'Admin Login',
+                  'User Login',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),

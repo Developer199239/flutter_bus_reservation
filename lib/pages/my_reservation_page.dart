@@ -44,7 +44,7 @@ class _MyReservationPageState extends State<MyReservationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reservation List'),
+        title: const Text('My Reservation'),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())  // Show loading spinner
